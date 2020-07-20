@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item
+            android:id="@+id/navigation_shop"
+            android:icon="@drawable/ic_guide"
+            android:title="@string/title_guide" />
+        <item
+            android:id="@+id/navigation_map"
+            android:icon="@drawable/ic_map"
+            android:title="@string/title_map" />
+        <item
+            android:id="@+id/navigation_gifts"
+            android:icon="@drawable/ic_tips"
+            android:title="@string/title_tips" />
+
+</menu>
