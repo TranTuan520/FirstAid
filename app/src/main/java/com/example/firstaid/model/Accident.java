@@ -1,7 +1,7 @@
 package com.example.firstaid.model;
 
 public class Accident {
-    private int mImage;
+    private String mImage;
     private String mTitle;
 
     @Override
@@ -10,14 +10,6 @@ public class Accident {
                 "mImage=" + mImage +
                 ", mTitle='" + mTitle + '\'' +
                 '}';
-    }
-
-    public int getmImage() {
-        return mImage;
-    }
-
-    public void setmImage(int mImage) {
-        this.mImage = mImage;
     }
 
     public String getmTitle() {
@@ -29,9 +21,18 @@ public class Accident {
     }
 
     public Accident() {
+
     }
 
-    public Accident(int mImage, String mTitle) {
+    public void setmImage(String mImage) {
+        this.mImage = mImage;
+    }
+
+    public String getmImage() {
+        return mImage;
+    }
+
+    public Accident(String mImage, String mTitle) {
         this.mImage = mImage;
         this.mTitle = mTitle;
     }

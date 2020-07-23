@@ -10,8 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.firstaid.model.*;
 import com.example.firstaid.R;
-import com.example.firstaid.model.Accident;
 
 import java.util.ArrayList;
 
@@ -19,8 +20,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private Context context;
     private ArrayList<Accident> listData;
 
-    public MyAdapter( ArrayList<Accident> listData) {
+    public MyAdapter(ArrayList<Accident> listData, Context context) {
         this.listData = listData;
+        this.context = context;
     }
 
     @NonNull
@@ -33,7 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvAcc.setText(listData.get(position).getmTitle());
-        holder.imgVAcc.setImageResource(listData.get(position).getmImage());
+        Glide.with(context).load(listData.get(position).getmImage()).into(holder.imgVAcc);
     }
 
     @Override

@@ -1,52 +1,127 @@
 package com.example.firstaid.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.firstaid.model.*;
 import com.example.firstaid.R;
 import com.example.firstaid.adapter.MyAdapter;
-import com.example.firstaid.model.Accident;
+import com.google.android.gms.common.util.ArrayUtils;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class FrGuide extends Fragment {
+    private DatabaseReference mDatabase;
+
+    private ImageView imageView;
     private RecyclerView recyclerView;
 
     private MyAdapter myAdapter;
     private ArrayList<Accident> listData;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fr_guide, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewAccs);
+        imageView = view.findViewById(R.id.imgv);
+
         createData();
+
+        //get data
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/GL8xOgy.jpg", "Bất tỉnh"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/zsu7taH.jpg", "Chảy máu"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/MpbxazA.jpg", "Bỏng"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/eqKdP9b.jpg", "Gãy Xương"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/dAFPuSD.jpg", "Đột quỵ"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/a9CURnz.jpg", "Nhồi máu cơ tim"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/H7ep4C7.jpg", "Điện giật"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/pCis9E6.jpg", "Đuối nước"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/Wug0ELn.jpg", "Hóc"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/UKD78fn.jpg", "Vết cắn, chích"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/iHUNp8x.jpg", "Nhiễm độc"));
+//        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/1FIMRpF.jpg", "Gân, cơ bầm"));
+//           ArrayList<Accident> list = new ArrayList<>();
+//
+//          list.add(new Accident("https://i.imgur.com/GL8xOgy.jpg", "Bất tỉnh"));
+//        list.add(new Accident("https://i.imgur.com/zsu7taH.jpg", "Chảy máu"));
+//        list.add(new Accident("https://i.imgur.com/MpbxazA.jpg", "Bỏng"));
+//        list.add(new Accident("https://i.imgur.com/eqKdP9b.jpg", "Gãy Xương"));
+//        list.add(new Accident("https://i.imgur.com/dAFPuSD.jpg", "Đột quỵ"));
+//        list.add(new Accident("https://i.imgur.com/a9CURnz.jpg", "Nhồi máu cơ tim"));
+//        list.add(new Accident("https://i.imgur.com/H7ep4C7.jpg", "Điện giật"));
+//        list.add(new Accident("https://i.imgur.com/pCis9E6.jpg", "Đuối nước"));
+//        list.add(new Accident("https://i.imgur.com/Wug0ELn.jpg", "Hóc"));
+//        list.add(new Accident("https://i.imgur.com/UKD78fn.jpg", "Vết cắn, chích"));
+//        list.add(new Accident("https://i.imgur.com/iHUNp8x.jpg", "Nhiễm độc"));
+//        list.add(new Accident("https://i.imgur.com/1FIMRpF.jpg", "Gân, cơ bầm"));
+//        mDatabase.child("AC2").push().setValue(list);
+//        mDatabase.child("ahihi").push().setValue("2");
+//        mDatabase.child("ahihi").push().setValue("3");
+//        mDatabase.child("ahihi").push().setValue("4");
+
+        mDatabase.child("AC").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Accident accident = snapshot.getValue(Accident.class);
+                Log.d("fucking value: ", accident.getmImage());
+                //Glide.with(getActivity()).load(accident.getmImage()).into(imageView);
+                listData.add(accident);
+                myAdapter.notifyDataSetChanged();
+                //Toast.makeText(getActivity(), "ffffffffffffffffffffffffffffff", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), accident.getmTitle()+"", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //Log.d("zzzz", listData.size()+"");
+        //Toast.makeText(getActivity(), listData.size()+"", Toast.LENGTH_SHORT).show();
         return view;
     }
-    public void createData(){
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(0);
-        listData = new ArrayList<>();
-        listData.add(new Accident( R.drawable.unconcious, "Bất tỉnh"));
-        listData.add(new Accident( R.drawable.bleeding, "Chảy máu"));
-        listData.add(new Accident( R.drawable.burn, "Bỏng"));
-        listData.add(new Accident( R.drawable.bone, "Gãy xương"));
-        listData.add(new Accident( R.drawable.stroke, "Đột quỵ"));
-        listData.add(new Accident( R.drawable.heartattack, "Nhồi máu cơ tim"));
-        listData.add(new Accident( R.drawable.electric, "Điện giật"));
-        listData.add(new Accident( R.drawable.water, "Đuối nước"));
-        listData.add(new Accident( R.drawable.choking, "Hóc"));
-        listData.add(new Accident( R.drawable.snake, "Vết cắn,chích"));
-        listData.add(new Accident( R.drawable.poisoned, "Nhiễm độc"));
-        listData.add(new Accident( R.drawable.contusion, "Gân, cơ bầm"));
+
+    public void createData() {
         DividerItemDecoration dividerHorizontal =
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerHorizontal);
@@ -57,7 +132,8 @@ public class FrGuide extends Fragment {
         gridLayoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        myAdapter = new MyAdapter(listData);
+        listData = new ArrayList<>();
+        myAdapter = new MyAdapter(listData, getActivity());
         myAdapter.setHasStableIds(true);
         recyclerView.setAdapter(myAdapter);
     }

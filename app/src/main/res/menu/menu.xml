@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
-            android:id="@+id/navigation_shop"
+            android:id="@+id/navigation_guide"
             android:icon="@drawable/ic_guide"
             android:title="@string/title_guide" />
         <item
-            android:id="@+id/navigation_map"
+            android:id="@+id/navigation_maps"
             android:icon="@drawable/ic_map"
             android:title="@string/title_map" />
         <item
-            android:id="@+id/navigation_gifts"
+            android:id="@+id/navigation_tips"
             android:icon="@drawable/ic_tips"
             android:title="@string/title_tips" />
 
