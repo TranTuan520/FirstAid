@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@mipmap/ic_launcher"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:gravity="bottom"
+    android:padding="16dp">
+    <ImageView
+        android:layout_width="72dp"
+        android:layout_height="74dp"
+        android:gravity="center_vertical"
+        android:src="@mipmap/ic_launcher"></ImageView>
+    <TextView
+        style="@style/header"
+        android:text="First Aid"></TextView>
+</LinearLayout>
