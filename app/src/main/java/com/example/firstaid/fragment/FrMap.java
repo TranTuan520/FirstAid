@@ -4,7 +4,11 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.firstaid.R;
+import com.example.firstaid.model.GetNearbyPlacesData;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,11 +35,17 @@ public class FrMap extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     FusedLocationProviderClient client;
     private SupportMapFragment mapFragment;
+    int PROXIMITY_RADIUS = 10000;
+    private MenuItem menuItem;
 
+    Object dataTransfer[] = new Object[2];
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fr_map, container, false);
+        setHasOptionsMenu(true);
+
+
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         client = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -81,6 +92,14 @@ public class FrMap extends Fragment implements OnMapReadyCallback {
                             //zoom map
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                             googleMap.addMarker(markerOptions);
+
+
+
+                            Object dataTransfer[] = new Object[2];
+                            dataTransfer[0] = mMap;
+                            dataTransfer[1] = getUrl(location.getLatitude(), location.getLongitude());
+                            GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                            getNearbyPlacesData.execute(dataTransfer);
                         }
                     });
                 }
@@ -98,9 +117,33 @@ public class FrMap extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    //show near hospital
+
+
+    //show menu
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+    }
+
+    private String getUrl(double latitude , double longitude )
+    {
+
+        StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlaceUrl.append("location="+latitude+","+longitude);
+        googlePlaceUrl.append("&radius="+PROXIMITY_RADIUS);
+        googlePlaceUrl.append("&type=hospital");
+        googlePlaceUrl.append("&sensor=true");
+        googlePlaceUrl.append("&key=Bệnh+viện");
+
+        Log.d("MapsActivity", "url = "+googlePlaceUrl.toString());
+
+        return googlePlaceUrl.toString();
     }
 }

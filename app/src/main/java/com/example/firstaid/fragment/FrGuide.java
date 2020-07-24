@@ -11,24 +11,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.firstaid.model.*;
 import com.example.firstaid.R;
 import com.example.firstaid.adapter.MyAdapter;
-import com.google.android.gms.common.util.ArrayUtils;
+import com.example.firstaid.model.Accident;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class FrGuide extends Fragment {
@@ -65,9 +61,9 @@ public class FrGuide extends Fragment {
 //        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/UKD78fn.jpg", "Vết cắn, chích"));
 //        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/iHUNp8x.jpg", "Nhiễm độc"));
 //        mDatabase.child("AC").push().setValue(new Accident("https://i.imgur.com/1FIMRpF.jpg", "Gân, cơ bầm"));
-//           ArrayList<Accident> list = new ArrayList<>();
+//        ArrayList<Accident> list = new ArrayList<>();
 //
-//          list.add(new Accident("https://i.imgur.com/GL8xOgy.jpg", "Bất tỉnh"));
+//        list.add(new Accident("https://i.imgur.com/GL8xOgy.jpg", "Bất tỉnh"));
 //        list.add(new Accident("https://i.imgur.com/zsu7taH.jpg", "Chảy máu"));
 //        list.add(new Accident("https://i.imgur.com/MpbxazA.jpg", "Bỏng"));
 //        list.add(new Accident("https://i.imgur.com/eqKdP9b.jpg", "Gãy Xương"));
@@ -83,6 +79,15 @@ public class FrGuide extends Fragment {
 //        mDatabase.child("ahihi").push().setValue("2");
 //        mDatabase.child("ahihi").push().setValue("3");
 //        mDatabase.child("ahihi").push().setValue("4");
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            Toast.makeText(getActivity(), user.getUid().toString(), Toast.LENGTH_SHORT).show();
+        } else {
+            // No user is signed in
+            Toast.makeText(getActivity(), "not login", Toast.LENGTH_SHORT).show();
+        }
 
         mDatabase.child("AC").addChildEventListener(new ChildEventListener() {
             @Override
@@ -122,15 +127,14 @@ public class FrGuide extends Fragment {
     }
 
     public void createData() {
-        DividerItemDecoration dividerHorizontal =
-                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerHorizontal);
-        DividerItemDecoration dividerVertical =
-                new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL);
-        recyclerView.addItemDecoration(dividerVertical);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        gridLayoutManager.scrollToPosition(0);
-        recyclerView.setLayoutManager(gridLayoutManager);
+//        DividerItemDecoration dividerHorizontal =
+//                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+//        recyclerView.addItemDecoration(dividerHorizontal);
+//        DividerItemDecoration dividerVertical =
+//                new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL);
+//        recyclerView.addItemDecoration(dividerVertical);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         listData = new ArrayList<>();
         myAdapter = new MyAdapter(listData, getActivity());

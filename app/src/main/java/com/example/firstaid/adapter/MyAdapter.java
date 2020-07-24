@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.firstaid.model.*;
+import com.example.firstaid.model.Accident;
 import com.example.firstaid.R;
 
 import java.util.ArrayList;

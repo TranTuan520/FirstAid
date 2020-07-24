@@ -37,4 +37,7 @@
     <string name ="title_map">Maps</string>
     <string name="title_accident">Accident</string>
     <string name="title_ac">Accident</string>
+    <string name="title_user_name">Name</string>
+    <string name="title_user_blood_group">Blood</string>
+    <string name="title_user_address">Aress</string>
 </resources>
