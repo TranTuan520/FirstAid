@@ -60,7 +60,7 @@ public class ActivityHome extends AppCompatActivity {
             return false;
         }
     };
-    private void loadFragment(Fragment fragment) {
+    public  void loadFragment(Fragment fragment) {
         // load fragment
         androidx.fragment.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayout, fragment);

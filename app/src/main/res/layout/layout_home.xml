@@ -38,10 +38,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             app:menu="@menu/menu"
-            android:background="@color/bgBottomNavigation"
+            android:background="@color/btn_login"
             app1:itemTextColor="@drawable/selector"
             app1:itemIconTint="@drawable/selector"
-            tools:menu="@menu/menu">
+            tools:menu="@menu/menu"
+            app:tabMode="scrollable">
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

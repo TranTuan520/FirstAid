@@ -37,8 +37,6 @@ public class FrMap extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     int PROXIMITY_RADIUS = 10000;
     private MenuItem menuItem;
-
-    Object dataTransfer[] = new Object[2];
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,12 +88,12 @@ public class FrMap extends Fragment implements OnMapReadyCallback {
                             //create maker option
                             MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("am hia");
                             //zoom map
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                             googleMap.addMarker(markerOptions);
 
 
 
-                            Object dataTransfer[] = new Object[2];
+                            Object[] dataTransfer = new Object[2];
                             dataTransfer[0] = mMap;
                             dataTransfer[1] = getUrl(location.getLatitude(), location.getLongitude());
                             GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();

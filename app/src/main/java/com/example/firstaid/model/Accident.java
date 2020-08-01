@@ -1,39 +1,53 @@
 package com.example.firstaid.model;
 
-public class Accident {
-    private String mImage;
-    private String mTitle;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-    @Override
-    public String toString() {
-        return "Accident{" +
-                "mImage=" + mImage +
-                ", mTitle='" + mTitle + '\'' +
-                '}';
-    }
-
-    public String getmTitle() {
-        return mTitle;
-    }
-
-    public void setmTitle(String mTitle) {
-        this.mTitle = mTitle;
-    }
+public class Accident implements Serializable {
+    private String key="";
+    private String mName, mImgLink;
+    private ArrayList<Step> listSteps;
 
     public Accident() {
-
     }
 
-    public void setmImage(String mImage) {
-        this.mImage = mImage;
+    public Accident(String mName, String mImgLink, ArrayList<Step> steps) {
+        this.mName = mName;
+        this.mImgLink = mImgLink;
+        this.listSteps = steps;
+    }
+    public String getKey(){
+        return key;
     }
 
-    public String getmImage() {
-        return mImage;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public Accident(String mImage, String mTitle) {
-        this.mImage = mImage;
-        this.mTitle = mTitle;
+    public String getmName() {
+        return mName;
     }
+
+    public void setmName(String mName) {
+        this.mName = mName;
+    }
+
+
+    public String getmImgLink() {
+        return mImgLink;
+    }
+
+    public void setmImgLink(String mImgLink) {
+        this.mImgLink = mImgLink;
+    }
+
+
+    public ArrayList<Step> getSteps() {
+        return listSteps;
+    }
+
+    public void setSteps(ArrayList<Step> steps) {
+        this.listSteps = steps;
+    }
+
 }
