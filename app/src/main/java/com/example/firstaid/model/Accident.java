@@ -1,8 +1,9 @@
 package com.example.firstaid.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Accident {
+public class Accident implements Serializable {
     private String key="";
     private String mName, mImgLink;
     private ArrayList<Step> listSteps;
@@ -15,8 +16,13 @@ public class Accident {
         this.mImgLink = mImgLink;
         this.listSteps = steps;
     }
+    public String getKey(){
+        return key;
+    }
 
-
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getmName() {
         return mName;

@@ -47,10 +47,13 @@ public class StepAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.cardview_step, container, false);
         ImageView imageView = view.findViewById(R.id.imgStep);
         TextView textView = view.findViewById(R.id.tvStep);
+        TextView  textViewCount = view.findViewById(R.id.tvStepCount);
+
         Step step = listData.get(position);
 
         Glide.with(context).load(step.getmImageLink()).into(imageView);
         textView.setText(step.getmStep());
+        textViewCount.setText("Step " + (position + 1) + " : ");
         container.addView(view, 0);
         return view;
     }
