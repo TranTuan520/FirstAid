@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.firstaid.R;
-import com.example.firstaid.adapter.MyAdapter;
+import com.example.firstaid.adapter.ListDataAdapter;
 import com.example.firstaid.model.Accident;
 
 import com.example.firstaid.model.Step;
@@ -33,7 +33,7 @@ public class FrGuide extends Fragment  {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView recyclerView;
 
-    public MyAdapter myAdapter;
+    public ListDataAdapter listDataAdapter;
     private ArrayList<Accident> listData;
 
 
@@ -57,7 +57,7 @@ public class FrGuide extends Fragment  {
 //            DB.put("ACC_"+i, new Accident("Bất tỉnh", "https://i.imgur.com/pCis9E6.jpg",steps));
 //            db.collection("DB_ACC").document("ACC_"+i).set(DB.get("ACC_"+i));
 //        }
-        myAdapter = new MyAdapter(listData, getActivity());
+        listDataAdapter = new ListDataAdapter(listData, getActivity());
         db.collection("DB_ACC")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -73,7 +73,7 @@ public class FrGuide extends Fragment  {
                                 Log.d("wtf", "trong for");
                             }
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                            recyclerView.setAdapter(myAdapter);
+                            recyclerView.setAdapter(listDataAdapter);
                             recyclerView.setLayoutManager(linearLayoutManager);
                             Log.d("wtf", listData.size()+"");
                             Log.d("wtf", "trong if");

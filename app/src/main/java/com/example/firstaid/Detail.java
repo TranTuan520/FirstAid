@@ -1,7 +1,5 @@
 package com.example.firstaid;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,17 +9,17 @@ import android.util.Log;
 import android.widget.ImageView;
 
 
+import com.example.firstaid.adapter.StepAdapter;
 import com.example.firstaid.model.Step;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import com.example.firstaid.R;
-import com.example.firstaid.adapter.MyAdapter;
+import com.example.firstaid.adapter.ListDataAdapter;
 import com.example.firstaid.model.Accident;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,15 +34,18 @@ public class Detail extends AppCompatActivity {
     private DatabaseReference DB;
 
     private String KEY ;
+    private StepAdapter stepAdapter;
 
-    private MyAdapter myAdapter;
+
+    private ViewPager viewPager;
     private ArrayList<Accident> listData;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference cities = db.collection("DB_ACC");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        viewPager = findViewById(R.id.viewPager);
+
         Intent intent = this.getIntent();
         KEY  =  intent.getStringExtra("KEY");
         Log.d("KEY", "onCreate: "+KEY);
@@ -53,7 +54,13 @@ public class Detail extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Accident accident = documentSnapshot.toObject(Accident.class);
-                Log.d("Detail", "onSuccess: " + accident.getmName());
+                ArrayList<Step> steps = accident.getSteps();
+                for(Step step : steps){
+                    Log.d("Detail", "onSuccess: " + step.getmStep()+" : "+ step.getmImageLink());
+                }
+                stepAdapter = new StepAdapter(Detail.this, steps );
+                viewPager.setAdapter(stepAdapter);
+                //viewPager.setPadding(130, 0, 130, 0);
             }
         });
 

@@ -19,13 +19,13 @@ import com.example.firstaid.model.Accident;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<Accident> listData;
     private Intent intent ;
 
-    public MyAdapter(ArrayList<Accident> listData, Context context) {
+    public ListDataAdapter(ArrayList<Accident> listData, Context context) {
         this.listData = listData;
         this.context = context;
     }

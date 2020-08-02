@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Detail">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tv"
-        android:text="paowwirhf[oihas[pfoih'pawjef'pjiaw"></TextView>
+    android:id="@+id/container"
+    tools:context=".Detail"
+    >
+   <androidx.viewpager.widget.ViewPager
+       android:id="@+id/viewPager"
+       android:clipToPadding="true"
+       android:layout_height="match_parent"
+       android:layout_width="match_parent">
+   </androidx.viewpager.widget.ViewPager>
 </androidx.constraintlayout.widget.ConstraintLayout>
