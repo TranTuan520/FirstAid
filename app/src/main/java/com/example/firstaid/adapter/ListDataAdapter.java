@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,24 +18,28 @@ import com.bumptech.glide.Glide;
 import com.example.firstaid.Detail;
 import com.example.firstaid.R;
 import com.example.firstaid.model.Accident;
+import com.example.firstaid.model.CustomFilter;
 
 import java.util.ArrayList;
 
-public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.ViewHolder> {
+public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.ViewHolder> implements Filterable {
 
     private Context context;
-    private ArrayList<Accident> listData;
+    public ArrayList<Accident> listData;
+    public ArrayList<Accident> filterList;
     private Intent intent ;
+    CustomFilter customFilter;
 
     public ListDataAdapter(ArrayList<Accident> listData, Context context) {
         this.listData = listData;
         this.context = context;
+        this.filterList = listData;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cv_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -57,6 +63,14 @@ public class ListDataAdapter extends RecyclerView.Adapter<ListDataAdapter.ViewHo
     @Override
     public int getItemCount() {
         return listData.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (customFilter == null) {
+            customFilter = new CustomFilter(filterList, this);
+        }
+        return customFilter;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

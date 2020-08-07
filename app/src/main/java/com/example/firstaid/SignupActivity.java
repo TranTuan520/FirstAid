@@ -12,20 +12,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.firstaid.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class SignupActivity extends AppCompatActivity {
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail, inputPassword, inputName, inputPhone, inputBlood;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +42,15 @@ public class SignupActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        btnSignIn = (Button) findViewById(R.id.sign_in_button);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        btnSignIn = findViewById(R.id.sign_in_button);
+        btnSignUp =  findViewById(R.id.sign_up_button);
+        inputEmail = findViewById(R.id.email);
+        inputPassword =findViewById(R.id.password);
+        inputBlood = findViewById(R.id.bloodType);
+        inputName = findViewById(R.id.Name);
+        inputPhone = findViewById(R.id.SDT);
+        progressBar =  findViewById(R.id.progressBar);
+        btnResetPassword =  findViewById(R.id.btn_reset_password);
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +71,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
@@ -93,6 +104,8 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+//                                    db.collection("User").add(new User(inputName.getText(), email, inputPhone.getText(),
+//                                            inputBlood.getText(), ));
                                     startActivity(new Intent(SignupActivity.this, MainActivity.class));
                                     finish();
                                 }

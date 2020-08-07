@@ -2,11 +2,11 @@ package com.example.firstaid;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -15,21 +15,34 @@ import com.example.firstaid.fragment.FrGuide;
 import com.example.firstaid.fragment.FrMap;
 import com.example.firstaid.fragment.FrTips;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 public class ActivityHome extends AppCompatActivity {
     private FrameLayout frameLayout;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView ;
     private BottomNavigationView bottomNavigationView;
+    Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_home);
         frameLayout = findViewById(R.id.frameLayout);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.navView);
 
-        FragmentManager manager  = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        FrGuide frGuide = new FrGuide();
-        transaction.add(R.id.frameLayout, frGuide);
-        transaction.commit();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                menuItem.setChecked(true);
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
+
+       fragment = new FrGuide();
+        loadFragment(fragment);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -40,7 +53,7 @@ public class ActivityHome extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
+
             switch (item.getItemId()) {
                 case R.id.navigation_guide:
                     fragment = new FrGuide();
@@ -74,5 +87,10 @@ public class ActivityHome extends AppCompatActivity {
 
         super.onResume();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 }

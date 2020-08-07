@@ -3,12 +3,17 @@ package com.example.firstaid.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +50,7 @@ public class FrGuide extends Fragment  {
         View view = inflater.inflate(R.layout.fr_guide, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewAccs);
         progressBar = view.findViewById(R.id.progressBar);
+        setHasOptionsMenu(true);
 
         listData = new ArrayList<>();
 
@@ -96,8 +102,24 @@ public class FrGuide extends Fragment  {
         return view;
     }
 
-
-
-
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_search, menu);
+        MenuItem menuItem =menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                listDataAdapter.getFilter().filter(query);
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listDataAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
 
 }

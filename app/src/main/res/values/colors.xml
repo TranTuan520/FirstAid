@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="bgBottomNavigation">#30D158</color>
+    <color name="colorPrimary">#caf0f8</color>
+    <color name="colorPrimaryDark">#6FBEFF</color>
+    <color name="colorAccent">#00b4d8</color>
+    <color name="bgBottomNavigation">#00b4d8</color>
 
     <color name="bg_login">#26ae90</color>
     <color name="bg_cv">#0A84FF</color>
@@ -15,7 +15,7 @@
     <color name="input_register">#888888</color>
     <color name="input_register_bg">#3b4148</color>
     <color name="input_register_hint">#5e6266</color>
-    <color name="btn_login">#26ae90</color>
+    <color name="btn_login">#2728FF</color>
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>

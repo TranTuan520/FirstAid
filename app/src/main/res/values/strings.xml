@@ -40,4 +40,6 @@
     <string name="title_user_name">Name</string>
     <string name="title_user_blood_group">Blood</string>
     <string name="title_user_address">Aress</string>
+    <string name="bloodType">Blood Type</string>
+    <string name="hint_sdt">Phone Number</string>
 </resources>
